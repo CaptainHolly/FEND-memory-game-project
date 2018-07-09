@@ -1,6 +1,21 @@
 /*
  * Create a list that holds all of your cards
  */
+const listOfCards = ['fa-diamond', 'fa-diamond', 
+					'fa-paper-plane-o', 'fa-paper-plane-o', 
+					'fa-anchor', 'fa-anchor', 
+					'fa-bolt', 'fa-bolt', 
+					'fa-cube', 'fa-cube', 
+					'fa-leaf', 'fa-leaf', 
+					'fa-bicycle', 'fa-bicycle', 
+					'fa-bomb', 'fa-bomb'];
+
+function makeCard(card) {
+	return `<li class="card"><i class="fa ${card}"></i></li>`;
+
+}
+
+
 
 
 /*
@@ -36,6 +51,19 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+//game initiating function
+function initiateGame() {
+	const deck = document.querySelector('.deck');
+	const cardHTML = listOfCards.map(function(card) {
+		return makeCard(card);
+	});
+	deck.innerHTML = cardHTML.join('')
+}
+
+initiateGame();
+
+
 const allCards = document.querySelectorAll('.card');
 let arrayOfOpenCards = [];
 
@@ -45,7 +73,11 @@ allCards.forEach(function(card) {
 		if (!card.classList.contains('match') && !card.classList.contains('open') && !card.classList.contains('show'))  {
 			arrayOfOpenCards.push(card);
 			card.classList.add('open', 'show');
-			//hide open cards
+			//Checks if open cards match
+			let firstOpenCardPicture = arrayOfOpenCards[0].querySelector('i').classList.item(1);
+
+
+			//Hide open cards if no match
 			if (arrayOfOpenCards.length === 2) {
 				setTimeout(function() {
 					arrayOfOpenCards.forEach(function(card) {
