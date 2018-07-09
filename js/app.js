@@ -51,6 +51,9 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+const moveCounter = document.querySelector('.moves')
+let moves = 0;
+moveCounter.innerHTML = moves;
 
 //game initiating function
 function initiateGame() {
@@ -59,6 +62,8 @@ function initiateGame() {
 		return makeCard(card);
 	});
 	deck.innerHTML = cardHTML.join('')
+	moves = 0;
+
 }
 
 initiateGame();
@@ -89,6 +94,8 @@ allCards.forEach(function(card) {
 						arrayOfOpenCards = [];
 					}, 500);
 				}
+				moves += 1
+				moveCounter.innerHTML = moves;
 			}
 		};
 	});
