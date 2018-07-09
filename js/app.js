@@ -11,7 +11,7 @@ const listOfCards = ['fa-diamond', 'fa-diamond',
 					'fa-bomb', 'fa-bomb'];
 
 function makeCard(card) {
-	return `<li class="card"><i class="fa ${card}"></i></li>`;
+	return `<li class="card" data-card=${card}><i class="fa ${card}"></i></li>`;
 
 }
 
@@ -55,7 +55,7 @@ function shuffle(array) {
 //game initiating function
 function initiateGame() {
 	const deck = document.querySelector('.deck');
-	const cardHTML = listOfCards.map(function(card) {
+	const cardHTML = shuffle(listOfCards).map(function(card) {
 		return makeCard(card);
 	});
 	deck.innerHTML = cardHTML.join('')
@@ -70,22 +70,26 @@ let arrayOfOpenCards = [];
 // Card opening function and event listener
 allCards.forEach(function(card) {
 	card.addEventListener('click', function() {
+
 		if (!card.classList.contains('match') && !card.classList.contains('open') && !card.classList.contains('show'))  {
 			arrayOfOpenCards.push(card);
 			card.classList.add('open', 'show');
-			//Checks if open cards match
-			let firstOpenCardPicture = arrayOfOpenCards[0].querySelector('i').classList.item(1);
-
-
-			//Hide open cards if no match
 			if (arrayOfOpenCards.length === 2) {
-				setTimeout(function() {
-					arrayOfOpenCards.forEach(function(card) {
-						card.classList.remove('open', 'show');
-					})
+				//Checks if open cards match
+				if (arrayOfOpenCards[0].dataset.card == arrayOfOpenCards[1].dataset.card) {
+					arrayOfOpenCards[0].classList.add('match');
+					arrayOfOpenCards[1].classList.add('match');
 					arrayOfOpenCards = [];
-				}, 500);
+				} else {
+					//Hide open cards if no match
+					setTimeout(function() {
+						arrayOfOpenCards.forEach(function(card) {
+							card.classList.remove('open', 'show');
+					});
+						arrayOfOpenCards = [];
+					}, 500);
+				}
 			}
-		}
+		};
 	});
 });
