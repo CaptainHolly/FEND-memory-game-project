@@ -63,11 +63,9 @@ function initiateGame() {
 	});
 	deck.innerHTML = cardHTML.join('')
 	moves = 0;
-
 }
 
 initiateGame();
-
 
 const allCards = document.querySelectorAll('.card');
 let arrayOfOpenCards = [];
@@ -80,23 +78,37 @@ allCards.forEach(function(card) {
 			arrayOfOpenCards.push(card);
 			card.classList.add('open', 'show');
 			if (arrayOfOpenCards.length === 2) {
+				moves++
+				moveCounter.innerHTML = moves;
+				const thirdStar = document.querySelector('#third');
+				const secondStar = document.querySelector('#second');
+				const firstStar = document.querySelector('#first');
+				if (moves >=10) {
+					thirdStar.style.display = 'none';
+				}
+					if (moves >=20) {
+					secondStar.style.display = 'none';
+					} 
+						if (moves >=30) {
+							firstStar.style.display = 'none';
+						}
 				//Checks if open cards match
 				if (arrayOfOpenCards[0].dataset.card == arrayOfOpenCards[1].dataset.card) {
-					arrayOfOpenCards[0].classList.add('match');
-					arrayOfOpenCards[1].classList.add('match');
-					arrayOfOpenCards = [];
+						arrayOfOpenCards[0].classList.add('match');
+						arrayOfOpenCards[1].classList.add('match');
+						arrayOfOpenCards = [];
 				} else {
 					//Hide open cards if no match
 					setTimeout(function() {
 						arrayOfOpenCards.forEach(function(card) {
 							card.classList.remove('open', 'show');
-					});
+							});
 						arrayOfOpenCards = [];
 					}, 500);
-				}
-				moves += 1
-				moveCounter.innerHTML = moves;
+				}				
 			}
 		};
 	});
 });
+
+
