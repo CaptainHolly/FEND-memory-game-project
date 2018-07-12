@@ -48,7 +48,7 @@ initiateGame();
 const timer = document.querySelector('.timer');
 let seconds = 0;
 let liveClock;
-let isThisTheFirstClick = 1
+timer.innerHTML = `${seconds} seconds`;
 
 
 function startClock() {
@@ -56,7 +56,12 @@ function startClock() {
 		timer.innerHTML = `${seconds} seconds`
 		seconds++;
 	}, 1000);
+	console.log('valami');
 };
+
+function resetClock() {
+	clearInterval(liveClock);
+}
 
 
 const allCards = document.querySelectorAll('.card');
@@ -70,7 +75,12 @@ restartButton.addEventListener('click', function(e) {
 	allCards.forEach(function(card) {
 		card.classList.remove('open', 'show', 'match');
 	});
+	arrayOfOpenCards = [];
 	initiateGame();
+	listen();
+	resetClock();
+	seconds = 0;
+	timer.innerHTML = `${seconds} seconds`
 	moveCounter.innerHTML = 0;
 	thirdStar.style.display = 'initial';
 	secondStar.style.display = 'initial';
@@ -113,7 +123,7 @@ function listen() {
 							card.classList.remove('open', 'show');
 							});
 						arrayOfOpenCards = [];
-					}, 750);
+					}, 1000);
 				}				
 		
 			};
