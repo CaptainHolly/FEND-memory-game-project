@@ -56,7 +56,6 @@ function startClock() {
 		timer.innerHTML = `${seconds} seconds`
 		seconds++;
 	}, 1000);
-	console.log('valami');
 };
 
 function resetClock() {
@@ -94,11 +93,11 @@ function listen() {
 	const allCards = document.querySelectorAll('.card');
 	allCards.forEach(function(card) {
 		card.addEventListener('click', function() {
-			if (!card.classList.contains('match') && !card.classList.contains('open') && !card.classList.contains('show'))  {
+			if (!card.classList.contains('match') && !card.classList.contains('open') && !card.classList.contains('show') && (arrayOfOpenCards.length <= 1))  {
 				arrayOfOpenCards.push(card);
 				card.classList.add('open', 'show');
 				//trigger timer
-				if ((seconds === 0) && (arrayOfOpenCards.length < 2)) {
+				if ((seconds === 0) && (arrayOfOpenCards.length === 1)) {
 						startClock();
 				} else if (arrayOfOpenCards.length === 2) {
 				 	moves++
