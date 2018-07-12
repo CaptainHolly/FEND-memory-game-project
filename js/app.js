@@ -43,7 +43,26 @@ function initiateGame() {
 }
 
 initiateGame();
-listen()
+
+
+const timer = document.querySelector('.timer');
+let seconds = 0;
+let liveClock;
+let isThisTheFirstClick = 1
+
+
+function startClock() {
+	liveClock = setInterval(function() {
+		timer.innerHTML = `${seconds} seconds`
+		seconds++;
+	}, 1000);
+};
+
+
+const allCards = document.querySelectorAll('.card');
+let arrayOfOpenCards = [];
+const thirdStar = document.querySelector('#third');
+const secondStar = document.querySelector('#second');
 
 const restartButton = document.querySelector('.restart');
 
@@ -53,14 +72,12 @@ restartButton.addEventListener('click', function(e) {
 	});
 	initiateGame();
 	moveCounter.innerHTML = 0;
-
+	thirdStar.style.display = 'initial';
+	secondStar.style.display = 'initial';
 });
 
-const allCards = document.querySelectorAll('.card');
-let arrayOfOpenCards = [];
-const thirdStar = document.querySelector('#third');
-const secondStar = document.querySelector('#second');
-const firstStar = document.querySelector('#first');
+
+
 
 // Card opening function and event listener
 function listen() {
@@ -70,18 +87,19 @@ function listen() {
 			if (!card.classList.contains('match') && !card.classList.contains('open') && !card.classList.contains('show'))  {
 				arrayOfOpenCards.push(card);
 				card.classList.add('open', 'show');
-				if (arrayOfOpenCards.length === 2) {
-					moves++
+				//trigger timer
+				if ((seconds === 0) && (arrayOfOpenCards.length < 2)) {
+						startClock();
+				} else if (arrayOfOpenCards.length === 2) {
+				 	moves++
 					moveCounter.innerHTML = moves;
+					
 					if (moves >=10) {
 					thirdStar.style.display = 'none';
 					}
 						if (moves >=20) {
 						secondStar.style.display = 'none';
 						} 
-							if (moves >=30) {
-								firstStar.style.display = 'none';
-							}
 				}
 				//Checks if open cards match
 				if (arrayOfOpenCards[0].dataset.card == arrayOfOpenCards[1].dataset.card) {
