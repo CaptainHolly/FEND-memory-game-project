@@ -67,10 +67,13 @@ const allCards = document.querySelectorAll('.card');
 let arrayOfOpenCards = [];
 const thirdStar = document.querySelector('#third');
 const secondStar = document.querySelector('#second');
+const allStars = document.querySelector('.stars');
 
 const restartButton = document.querySelector('.restart');
 
-restartButton.addEventListener('click', function(e) {
+restartButton.addEventListener('click', restartGame);
+
+function restartGame() {
 	allCards.forEach(function(card) {
 		card.classList.remove('open', 'show', 'match');
 	});
@@ -83,9 +86,13 @@ restartButton.addEventListener('click', function(e) {
 	moveCounter.innerHTML = 0;
 	thirdStar.style.display = 'initial';
 	secondStar.style.display = 'initial';
-});
+};
 
 
+const matchedCards = document.getElementsByClassName('match');
+const modal = document.querySelector('.modal');
+const timeToComplete = document.querySelector('.time-to-complete');
+const starRating = document.querySelector('.star-rating');
 
 
 // Card opening function and event listener
@@ -123,11 +130,29 @@ function listen() {
 							});
 						arrayOfOpenCards = [];
 					}, 1000);
-				}				
-		
+				}
 			};
+			if (matchedCards.length === 16) {
+				modal.style.display = 'block';
+				timeToComplete.innerHTML = timer.innerHTML;
+				starRating.innerHTML = allStars.innerHTML;
+				starRating.style.display = '-webkit-inline-box';
+				starRating.style.listStyle = 'none';
+				resetClock()
+			}
 		});
 	});
 };
 
+const newGame = document.getElementById('new-game');
+const noNewGame = document.getElementById('finished');
+
+newGame.addEventListener('click', function() {
+	modal.style.display = 'none';
+	restartGame();
+})
+
+noNewGame.addEventListener('click', function() {
+	modal.style.display = 'none';
+})
 
